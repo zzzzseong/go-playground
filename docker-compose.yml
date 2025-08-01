@@ -1,0 +1,15 @@
+services:
+  db:
+    image: mysql:9.4.0
+    container_name: go-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: playground
+      MYSQL_USER: playground
+      MYSQL_PASSWORD: playground
+      MYSQL_DATABASE: playground
+      TZ: Asia/Seoul
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
