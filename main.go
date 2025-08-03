@@ -5,19 +5,13 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"go-playground/db"
+	"go-playground/logger"
 	"log"
 	"os"
 )
 
 func main() {
-	// Load environment variables from .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	// Initialize the database connection
-	db.Connect()
+	Initialize()
 
 	e := echo.New()
 
@@ -28,4 +22,18 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.Logger.Fatal(e.Start(os.Getenv("PORT")))
+}
+
+func Initialize() {
+	// Load environment variables from .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// Initialize the database connection
+	db.Connect()
+
+	// Initialize the logger
+	logger.InitLogger()
 }
