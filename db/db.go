@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var database *gorm.DB
+
 func Connect() *gorm.DB {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s",
@@ -20,7 +22,8 @@ func Connect() *gorm.DB {
 		os.Getenv("DB_NAME"),
 	)
 
-	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	var err error
+	database, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("❌  Failed to connect to the database: %v", err)
 	}
